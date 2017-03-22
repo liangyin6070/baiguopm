@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 角色表XML -->
+<mapper namespace="com.baiguo.web.admin.dao.SystemRoleMapper">
+	<!-- 缓存配置 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache">
+		<property name="timeToIdleSeconds" value="120" /><!--2分钟 -->
+		<property name="timeToLiveSeconds" value="120" /><!--2分钟 -->
+		<property name="maxEntriesLocalHeap" value="1000" />
+		<property name="maxEntriesLocalDisk" value="10000000" />
+		<property name="memoryStoreEvictionPolicy" value="LRU" />
+	</cache>
+	<!-- 表映射 -->
+	<resultMap id="BaseResultMap" type="com.baiguo.web.admin.model.SystemRole">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+		<result column="publish_status" property="publishStatus" jdbcType="BIT" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 查询属性 -->
+	<sql id="Base_Column_List">
+		id, role_name, role_code, publish_status, remark
+	</sql>
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="false">
+		select
+		<include refid="Base_Column_List" />
+		from system_role
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 根据账号查询角色值 -->
+	<select id="selectByUserName" resultType="java.lang.String" parameterType="java.lang.String" useCache="false">
+		SELECT role.role_code FROM system_role role
+		LEFT join system_user_role ur ON role.id = ur.role_id
+		LEFT join system_user user ON ur.user_id = user.id
+		WHERE user.user_name = #{userName,jdbcType=VARCHAR} AND role.publish_status
+		= 1
+	</select>
+	<!-- 分页查询 -->
+	<select id="findByPage" resultMap="BaseResultMap" parameterType="java.util.Map" useCache="false">
+		select
+		<include refid="Base_Column_List" />
+		from system_role
+		<where>
+			1=1
+			<if test="roleName != null "> and role_name like '%#{roleName,jdbcType=VARCHAR}%'</if>
+		</where>
+		<if test="pageNo != null and pageSize != null">
+			limit #{pageNo,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+		</if>
+	</select>
+	<!--  -->
+	<select id="count" parameterType="java.util.Map" resultType="java.lang.Long" useCache="false">
+		select count(1) from system_role
+		<where>
+			1=1
+			<if test="roleName != null "> and role_name like '%#{roleName,jdbcType=VARCHAR}%'</if>
+		</where>
+	</select>
+	
+	<!-- 删除角色 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from system_role
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<!-- 新增角色 -->
+	<insert id="insert" parameterType="com.baiguo.web.admin.model.SystemRole">
+		insert into system_role (id, role_name, role_code,
+		publish_status, remark)
+		values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR},
+		#{roleCode,jdbcType=VARCHAR},
+		#{publishStatus,jdbcType=BIT}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	<!-- 新增角色 -->
+	<insert id="insertSelective" parameterType="com.baiguo.web.admin.model.SystemRole">
+		insert into system_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="roleName != null">
+				role_name,
+			</if>
+			<if test="roleCode != null">
+				role_code,
+			</if>
+			<if test="publishStatus != null">
+				publish_status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleCode != null">
+				#{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="publishStatus != null">
+				#{publishStatus,jdbcType=BIT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新角色 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.baiguo.web.admin.model.SystemRole">
+		update system_role
+		<set>
+			<if test="roleName != null">
+				role_name = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleCode != null">
+				role_code = #{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="publishStatus != null">
+				publish_status = #{publishStatus,jdbcType=BIT},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 更新角色 -->
+	<update id="updateByPrimaryKey" parameterType="com.baiguo.web.admin.model.SystemRole">
+		update system_role
+		set role_name = #{roleName,jdbcType=VARCHAR},
+		role_code = #{roleCode,jdbcType=VARCHAR},
+		publish_status = #{publishStatus,jdbcType=BIT},
+		remark = #{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

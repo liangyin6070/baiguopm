@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 用户表XML -->
+<mapper namespace="com.baiguo.web.admin.dao.SystemUserMapper">
+	<!-- 缓存配置 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache">
+		<property name="timeToIdleSeconds" value="120" /><!--2分钟 -->
+		<property name="timeToLiveSeconds" value="120" /><!--2分钟 -->
+		<property name="maxEntriesLocalHeap" value="1000" />
+		<property name="maxEntriesLocalDisk" value="10000000" />
+		<property name="memoryStoreEvictionPolicy" value="LRU" />
+	</cache>
+
+	<!-- 表映射 -->
+	<resultMap id="BaseResultMap" type="com.baiguo.web.admin.model.SystemUser">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
+		<result column="reail_name" property="reailName" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="token" property="token" jdbcType="VARCHAR" />
+		<result column="head_img" property="headImg" jdbcType="VARCHAR" />
+		<result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+		<result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+		<result column="login_num" property="loginNum" jdbcType="INTEGER" />
+		<result column="is_locked" property="isLocked" jdbcType="BIT" />
+		<result column="is_admin" property="isAdmin" jdbcType="BIT" />
+		<result column="remote_addr" property="remoteAddr" jdbcType="VARCHAR" />
+		<result column="publish_status" property="publishStatus" jdbcType="BIT" />
+	</resultMap>
+	<!-- 查询属性 -->
+	<sql id="Base_Column_List">
+		id, user_name, user_pwd, email, contact, reail_name, sex, birthday,
+		address, token,
+		head_img, register_time, last_login_time, login_num, is_locked, is_admin,
+		remote_addr,
+		publish_status
+	</sql>
+	<!-- 主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer" useCache="false">
+		select
+		<include refid="Base_Column_List" />
+		from system_user
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 根据账号查询 -->
+	<select id="selectByUserName" resultMap="BaseResultMap"
+		parameterType="java.lang.String" useCache="false">
+		select
+		<include refid="Base_Column_List" />
+		from system_user
+		where user_name = #{userName,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 分页获取用户信息 -->
+	<select id="findByPage" parameterType="java.util.Map" resultMap="BaseResultMap" useCache="false">
+		select
+		<include refid="Base_Column_List" />
+		from system_user
+		<where>
+			1=1
+			<if test="userName != null "> and user_name like #{userName,jdbcType=VARCHAR}</if>
+		</where>
+		<if test="pageNo != null and pageSize != null">
+			limit #{pageNo,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+		</if>
+	</select>
+	<!-- 获取用户数量 -->
+	<select id="count" parameterType="java.util.Map" resultType="java.lang.Long" useCache="false">
+		select count(1) from system_user
+		<where>
+			1=1
+			<if test="userName != null "> and user_name like #{userName,jdbcType=VARCHAR}</if>
+		</where>
+	</select>
+	<!-- 删除用户 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from system_user where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<!-- 新增用户 -->
+	<insert id="insert" parameterType="com.baiguo.web.admin.model.SystemUser">
+		insert into system_user (id, user_name, user_pwd,
+		email, contact, reail_name,
+		sex, birthday, address,
+		token, head_img, register_time,
+		last_login_time, login_num, is_locked,
+		is_admin, remote_addr, publish_status
+		)
+		values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
+		#{userPwd,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{reailName,jdbcType=VARCHAR},
+		#{sex,jdbcType=INTEGER}, #{birthday,jdbcType=DATE},
+		#{address,jdbcType=VARCHAR},
+		#{token,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP},
+		#{lastLoginTime,jdbcType=TIMESTAMP}, #{loginNum,jdbcType=INTEGER},
+		#{isLocked,jdbcType=BIT},
+		#{isAdmin,jdbcType=BIT}, #{remoteAddr,jdbcType=VARCHAR}, #{publishStatus,jdbcType=BIT}
+		)
+	</insert>
+	<!-- 新增用户 -->
+	<insert id="insertSelective" parameterType="com.baiguo.web.admin.model.SystemUser">
+		insert into system_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="userPwd != null">
+				user_pwd,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="contact != null">
+				contact,
+			</if>
+			<if test="reailName != null">
+				reail_name,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="token != null">
+				token,
+			</if>
+			<if test="headImg != null">
+				head_img,
+			</if>
+			<if test="registerTime != null">
+				register_time,
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time,
+			</if>
+			<if test="loginNum != null">
+				login_num,
+			</if>
+			<if test="isLocked != null">
+				is_locked,
+			</if>
+			<if test="isAdmin != null">
+				is_admin,
+			</if>
+			<if test="remoteAddr != null">
+				remote_addr,
+			</if>
+			<if test="publishStatus != null">
+				publish_status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				#{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="contact != null">
+				#{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="reailName != null">
+				#{reailName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="token != null">
+				#{token,jdbcType=VARCHAR},
+			</if>
+			<if test="headImg != null">
+				#{headImg,jdbcType=VARCHAR},
+			</if>
+			<if test="registerTime != null">
+				#{registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginTime != null">
+				#{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginNum != null">
+				#{loginNum,jdbcType=INTEGER},
+			</if>
+			<if test="isLocked != null">
+				#{isLocked,jdbcType=BIT},
+			</if>
+			<if test="isAdmin != null">
+				#{isAdmin,jdbcType=BIT},
+			</if>
+			<if test="remoteAddr != null">
+				#{remoteAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="publishStatus != null">
+				#{publishStatus,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	<!-- 编辑用户 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.baiguo.web.admin.model.SystemUser">
+		update system_user
+		<set>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				user_pwd = #{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="contact != null">
+				contact = #{contact,jdbcType=VARCHAR},
+			</if>
+			<if test="reailName != null">
+				reail_name = #{reailName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="token != null">
+				token = #{token,jdbcType=VARCHAR},
+			</if>
+			<if test="headImg != null">
+				head_img = #{headImg,jdbcType=VARCHAR},
+			</if>
+			<if test="registerTime != null">
+				register_time = #{registerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginNum != null">
+				login_num = #{loginNum,jdbcType=INTEGER},
+			</if>
+			<if test="isLocked != null">
+				is_locked = #{isLocked,jdbcType=BIT},
+			</if>
+			<if test="isAdmin != null">
+				is_admin = #{isAdmin,jdbcType=BIT},
+			</if>
+			<if test="remoteAddr != null">
+				remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="publishStatus != null">
+				publish_status = #{publishStatus,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 编辑用户 -->
+	<update id="updateByPrimaryKey" parameterType="com.baiguo.web.admin.model.SystemUser">
+		update system_user
+		set user_name = #{userName,jdbcType=VARCHAR},
+		user_pwd = #{userPwd,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		contact = #{contact,jdbcType=VARCHAR},
+		reail_name = #{reailName,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=INTEGER},
+		birthday = #{birthday,jdbcType=DATE},
+		address = #{address,jdbcType=VARCHAR},
+		token = #{token,jdbcType=VARCHAR},
+		head_img = #{headImg,jdbcType=VARCHAR},
+		register_time = #{registerTime,jdbcType=TIMESTAMP},
+		last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+		login_num = #{loginNum,jdbcType=INTEGER},
+		is_locked = #{isLocked,jdbcType=BIT},
+		is_admin = #{isAdmin,jdbcType=BIT},
+		remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+		publish_status = #{publishStatus,jdbcType=BIT}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
