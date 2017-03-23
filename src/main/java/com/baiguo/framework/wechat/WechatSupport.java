@@ -14,6 +14,7 @@ import com.baiguo.framework.wechat.common.SHA1;
 import com.baiguo.framework.wechat.common.WechatConfig;
 import com.baiguo.framework.wechat.oauth2.SnsapiBaseManage;
 import com.baiguo.framework.wechat.user.UserModel;
+import com.baiguo.framework.wechat.utils.AttributeUils;
 import com.baiguo.framework.wechat.utils.ResponseUtils;
 /**
  * 
@@ -95,12 +96,12 @@ public abstract class WechatSupport {
 				url= prop.getProperty("scanURL").trim();
 				response.sendRedirect(url);
 			} else {
-				request.getSession(false).setAttribute("wechat_user", user);
+				request.getSession(false).setAttribute(AttributeUils.WECHAT_USER, user);
 				url = prop.getProperty(refer).trim();
 				response.sendRedirect(editUrlParams(url, request));
 			}
 		} catch (IOException e) {
-			log.error("", e);
+			log.error("读取配置文件失败", e);
 		}
 	}
 	/**

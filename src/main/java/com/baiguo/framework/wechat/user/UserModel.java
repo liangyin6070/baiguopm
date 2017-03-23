@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @class com.liudw.wxapi.user.UserModel
  * @date 2016-12-5 下午12:00:41
  * @author Administrator
- * @description 用户信息类
+ * @description 微信用户信息类
  */
 @SuppressWarnings("serial")
 public class UserModel implements Serializable{
