@@ -113,7 +113,11 @@ public class PageInterceptor implements Interceptor {
         
     }  
     
-    
+    /**
+     * 查询总次数
+     * @param sql
+     * @return
+     */
     public String concatCountSql(String sql){
         StringBuffer sb=new StringBuffer("select count(*) from ");
         sql=sql.toLowerCase();
@@ -125,7 +129,12 @@ public class PageInterceptor implements Interceptor {
         }
         return sb.toString();
     }
-    
+    /**
+     * 分页查询
+     * @param sql
+     * @param page
+     * @return
+     */
     public String concatPageSql(String sql, Page page){
         StringBuffer sb=new StringBuffer();
         sb.append(sql);

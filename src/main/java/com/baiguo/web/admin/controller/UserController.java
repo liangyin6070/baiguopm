@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -54,14 +55,16 @@ public class UserController extends BaseRestController {
 	@RequiresPermissions("user:ajaxList")//权限限制
 	@RequestMapping(value="/manage/admin/user/ajaxList", method=RequestMethod.POST)
 	@ResponseBody
-	public JSONObject ajaxList(HttpServletRequest request, HttpServletResponse response, Integer page, Integer rows) {
+	public JSONObject ajaxList(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(value="page", required=true, defaultValue="1") Integer pageNo, 
+			@RequestParam(value="rows", required=true, defaultValue="20") Integer pageSize) {
 		JSONObject result = new JSONObject();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("pageNo", (page-1)*rows);
-		params.put("pageSize", rows);
-		List<SystemUser> users = userService.findByPage(params);
-		long count = userService.count(params);
-		result.put("total", count);
+		SystemUser user = new SystemUser();
+		user.setPageNo(pageNo);
+		user.setPageSize(pageSize);
+		
+		List<SystemUser> users = userService.selectPage(user);
+		result.put("total", user.getTotal());
 		result.put("rows", (JSONArray)JSONArray.toJSON(users));
 		return result;
 	}
@@ -92,8 +95,16 @@ public class UserController extends BaseRestController {
 	@RequiresPermissions("user:delete")//权限限制
 	@RequestMapping(value="/manage/admin/user/delete", method=RequestMethod.POST)
 	@ResponseBody
-	public void deleteUser() {
-		
+	public JSONObject deleteUser(HttpServletRequest request, HttpServletResponse response, Integer id) {
+		JSONObject result = new JSONObject();
+		try {
+			userService.deleteById(id);
+			result.put("success",true);
+			result.put("msg", "用户新增成功");
+		} catch (Exception e) {
+			logger.error("新增用户失败", e);
+		}
+		return result;
 	}
 	/**
 	 * 编辑用户
@@ -102,7 +113,15 @@ public class UserController extends BaseRestController {
 	@RequiresPermissions("user:edit")//权限限制
 	@RequestMapping(value="/manage/admin/user/edit", method=RequestMethod.POST)
 	@ResponseBody
-	public void editUser() {
-		
+	public JSONObject editUser(HttpServletRequest request, HttpServletResponse response, SystemUser user) {
+		JSONObject result = new JSONObject();
+		try {
+			userService.editUser(user);
+			result.put("success",true);
+			result.put("msg", "用户新增成功");
+		} catch (Exception e) {
+			logger.error("新增用户失败", e);
+		}
+		return result;
 	}
 }

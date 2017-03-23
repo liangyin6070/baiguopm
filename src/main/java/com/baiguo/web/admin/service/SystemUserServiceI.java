@@ -44,7 +44,7 @@ public interface SystemUserServiceI {
 	 * @param params
 	 * @return
 	 */
-	List<SystemUser> findByPage(Map<String, Object> params);
+	List<SystemUser> selectPage(SystemUser user);
 	/**
 	 * 
 	 * @param params

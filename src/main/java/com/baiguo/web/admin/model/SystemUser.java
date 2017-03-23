@@ -1,45 +1,32 @@
 package com.baiguo.web.admin.model;
+
+import java.util.Date;
+import com.baiguo.framework.model.Page;
 /**
  * 
+ * @description 后台用户表映射类
+ * @author ldw
+ * @datetime 2017年3月23日 下午3:51:16
  */
-import java.util.Date;
-
-public class SystemUser {
-    private Integer id;
-
-    private String userName;
-
-    private String userPwd;
-
-    private String email;
-
-    private String contact;
-
-    private String reailName;
-
-    private Integer sex;
-
-    private Date birthday;
-
-    private String address;
-
-    private String token;
-
-    private String headImg;
-
-    private Date registerTime;
-
-    private Date lastLoginTime;
-
-    private Integer loginNum;
-
-    private Boolean isLocked;
-
-    private Boolean isAdmin;
-
-    private String remoteAddr;
-
-    private Boolean publishStatus;
+public class SystemUser extends Page{
+    private Integer id;//主键
+    private String userName;//账号
+    private String userPwd;//密码
+    private String email;//电子邮件
+    private String contact;//联系方式
+    private String reailName;//真实姓名
+    private Integer sex;//性别
+    private Date birthday;//出生日期
+    private String address;//地址
+    private String token;//加盐
+    private String headImg;//头像地址
+    private Date registerTime;//注册时间
+    private Date lastLoginTime;//最后登陆时间
+    private Integer loginNum;//登录次数
+    private Boolean isLocked;//是否锁定
+    private Boolean isAdmin;//是否管理员
+    private String remoteAddr;//访问地址
+    private Boolean publishStatus;//发布状态
 
     public Integer getId() {
         return id;

@@ -1,19 +1,18 @@
 package com.baiguo.web.admin.model;
+
+import com.baiguo.framework.model.Page;
+
 /**
  * 
  * @description 
  * @author ldw
  * @datetime 2017年3月22日 上午11:47:44
  */
-public class SystemRole {
+public class SystemRole extends Page {
     private Integer id;
-
     private String roleName;
-
     private String roleCode;
-
     private Boolean publishStatus;
-
     private String remark;
 
     public Integer getId() {

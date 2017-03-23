@@ -1,30 +1,24 @@
 package com.baiguo.web.admin.model;
+
+import com.baiguo.framework.model.Page;
+
 /**
  * 
- * @description 
+ * @description 权限资源映射类
  * @author ldw
  * @datetime 2017年3月22日 上午11:47:36
  */
-public class SystemResource {
-    private Integer id;
-
-    private Integer pid;
-
-    private String name;
-
-    private String type;
-
-    private String url;
-
-    private Integer sort;
-
-    private String permission;
-
-    private String remark;
-
-    private Boolean publishStatus;
-
-    private String icon;
+public class SystemResource extends Page{
+    private Integer id;//主键
+    private Integer pid;//父ID
+    private String name;//资源名称
+    private String type;//类型
+    private String url;//URL
+    private Integer sort;//排序
+    private String permission;//权限
+    private String remark;//备注
+    private Boolean publishStatus;//发布状态
+    private String icon;//图标
     
     public Integer getId() {
         return id;

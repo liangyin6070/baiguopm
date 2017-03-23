@@ -1,23 +1,20 @@
 package com.baiguo.web.admin.model;
 
 import java.util.Date;
+import com.baiguo.framework.model.Page;
+
 /**
  * 
  * @description 后台操作日志
  * @author ldw
  * @datetime 2017年3月22日 上午11:47:19
  */
-public class SystemLog {
+public class SystemLog extends Page{
     private Long id;
-
     private Integer userId;
-
     private String remoteAddr;
-
     private Date operateTime;
-
     private String operateType;
-
     private String operateBusiness;
 
     public Long getId() {

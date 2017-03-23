@@ -25,7 +25,7 @@ public interface SystemUserMapper {
 
     int updateByPrimaryKey(SystemUser record);
     
-	List<SystemUser> findByPage(Map<String, Object> params);
+	List<SystemUser> selectPage(SystemUser record);
 	
 	long count(Map<String, Object> params);
 }

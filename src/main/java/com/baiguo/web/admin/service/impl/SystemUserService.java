@@ -73,8 +73,8 @@ public class SystemUserService implements SystemUserServiceI{
 	 * 分页获取用户列表
 	 */
 	@Override
-	public List<SystemUser> findByPage(Map<String, Object> params) {
-		return userMapper.findByPage(params);
+	public List<SystemUser> selectPage(SystemUser user) {
+		return userMapper.selectPage(user);
 	}
 	/**
 	 * 获取用户数量

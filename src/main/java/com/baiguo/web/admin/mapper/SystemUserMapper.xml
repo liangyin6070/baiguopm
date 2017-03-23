@@ -59,7 +59,7 @@
 	</select>
 
 	<!-- 分页获取用户信息 -->
-	<select id="findByPage" parameterType="java.util.Map" resultMap="BaseResultMap" useCache="false">
+	<select id="selectPage" parameterType="com.baiguo.web.admin.model.SystemUser" resultMap="BaseResultMap" useCache="false">
 		select
 		<include refid="Base_Column_List" />
 		from system_user
@@ -67,9 +67,6 @@
 			1=1
 			<if test="userName != null "> and user_name like #{userName,jdbcType=VARCHAR}</if>
 		</where>
-		<if test="pageNo != null and pageSize != null">
-			limit #{pageNo,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
-		</if>
 	</select>
 	<!-- 获取用户数量 -->
 	<select id="count" parameterType="java.util.Map" resultType="java.lang.Long" useCache="false">
