@@ -3,15 +3,20 @@ package com.baiguo.framework.wechat;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import com.baiguo.framework.base.DateConvertEditor;
 import com.baiguo.framework.wechat.common.SHA1;
 import com.baiguo.framework.wechat.common.WechatConfig;
+import com.baiguo.framework.wechat.jsapi.JsApiConfig;
 import com.baiguo.framework.wechat.oauth2.SnsapiBaseManage;
 import com.baiguo.framework.wechat.user.UserModel;
 import com.baiguo.framework.wechat.utils.AttributeUils;
@@ -21,11 +26,18 @@ import com.baiguo.framework.wechat.utils.ResponseUtils;
  * @class com.liudw.wxapi.WechatSupport
  * @date 2016-12-5 下午4:10:34
  * @author Administrator
- * @description 微信业务入口类
+ * @description 微信业务入口类——总控入口
  */
 public abstract class WechatSupport {
 	
 	private static Logger log = LoggerFactory.getLogger(WechatSupport.class);
+	public static String SUCCESS = "success";
+	public static String MSG = "msg";
+	
+	@InitBinder
+	public void initBinder(ServletRequestDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new DateConvertEditor());
+	}
 	
 	/**
 	 * 验证微信平台是否接入成功
@@ -110,7 +122,7 @@ public abstract class WechatSupport {
 	 * @param request
 	 * @return
 	 */
-	public String editUrlParams(String url, HttpServletRequest request) {
+	private String editUrlParams(String url, HttpServletRequest request) {
 		StringBuilder urlParams = new StringBuilder();
 		urlParams.append(url);
 		Enumeration enu = request.getParameterNames();
@@ -129,5 +141,19 @@ public abstract class WechatSupport {
 			}
 		}
 		return urlParams.toString();
+	}
+	
+	/**
+	 * 将JSSDK签名写入jsp
+	 * @param now
+	 * @param url
+	 * @param model
+	 */
+	public void addJsApiParams(String url, ModelMap model) {
+		JsApiConfig config = JsApiConfig.getInstance(false, url);
+		model.addAttribute("signature", config.getSignature());
+		model.addAttribute("timestamp", config.getTimestamp());
+		model.addAttribute("nonceStr", config.getNonceStr());
+		model.addAttribute("appid", config.getAppid());
 	}
 }

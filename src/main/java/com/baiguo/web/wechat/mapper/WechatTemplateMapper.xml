@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiguo.web.wechat.dao.WechatTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.baiguo.web.wechat.model.WechatTemplate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="match_text" property="matchText" jdbcType="VARCHAR" />
+    <result column="access_type" property="accessType" jdbcType="VARCHAR" />
+    <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+    <result column="media_id" property="mediaId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="music_url" property="musicUrl" jdbcType="VARCHAR" />
+    <result column="hd_music_url" property="hdMusicUrl" jdbcType="VARCHAR" />
+    <result column="thumb_media_id" property="thumbMediaId" jdbcType="VARCHAR" />
+    <result column="article_count" property="articleCount" jdbcType="INTEGER" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="publish_status" property="publishStatus" jdbcType="BIT" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="created_user_id" property="createdUserId" jdbcType="INTEGER" />
+    <result column="modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
+    <result column="modified_user_id" property="modifiedUserId" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="articles" property="articles" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, match_text, access_type, msg_type, media_id, title, music_url, hd_music_url, 
+    thumb_media_id, article_count, pic_url, url, publish_status, created_time, created_user_id, 
+    modified_time, modified_user_id,content, description, articles
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wechat_template
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wechat_template
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baiguo.web.wechat.model.WechatTemplate" >
+    insert into wechat_template (id, match_text, access_type, 
+      msg_type, media_id, title, 
+      music_url, hd_music_url, thumb_media_id, 
+      article_count, pic_url, url, 
+      publish_status, created_time, created_user_id, 
+      modified_time, modified_user_id, content, 
+      description, articles)
+    values (#{id,jdbcType=INTEGER}, #{matchText,jdbcType=VARCHAR}, #{accessType,jdbcType=VARCHAR}, 
+      #{msgType,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{musicUrl,jdbcType=VARCHAR}, #{hdMusicUrl,jdbcType=VARCHAR}, #{thumbMediaId,jdbcType=VARCHAR}, 
+      #{articleCount,jdbcType=INTEGER}, #{picUrl,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{publishStatus,jdbcType=BIT}, #{createdTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=INTEGER}, 
+      #{modifiedTime,jdbcType=TIMESTAMP}, #{modifiedUserId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR}, #{articles,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baiguo.web.wechat.model.WechatTemplate" >
+    insert into wechat_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="matchText != null" >
+        match_text,
+      </if>
+      <if test="accessType != null" >
+        access_type,
+      </if>
+      <if test="msgType != null" >
+        msg_type,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="musicUrl != null" >
+        music_url,
+      </if>
+      <if test="hdMusicUrl != null" >
+        hd_music_url,
+      </if>
+      <if test="thumbMediaId != null" >
+        thumb_media_id,
+      </if>
+      <if test="articleCount != null" >
+        article_count,
+      </if>
+      <if test="picUrl != null" >
+        pic_url,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="publishStatus != null" >
+        publish_status,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="createdUserId != null" >
+        created_user_id,
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time,
+      </if>
+      <if test="modifiedUserId != null" >
+        modified_user_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="articles != null" >
+        articles,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="matchText != null" >
+        #{matchText,jdbcType=VARCHAR},
+      </if>
+      <if test="accessType != null" >
+        #{accessType,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="musicUrl != null" >
+        #{musicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="hdMusicUrl != null" >
+        #{hdMusicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbMediaId != null" >
+        #{thumbMediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCount != null" >
+        #{articleCount,jdbcType=INTEGER},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStatus != null" >
+        #{publishStatus,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null" >
+        #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedUserId != null" >
+        #{modifiedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articles != null" >
+        #{articles,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baiguo.web.wechat.model.WechatTemplate" >
+    update wechat_template
+    <set >
+      <if test="matchText != null" >
+        match_text = #{matchText,jdbcType=VARCHAR},
+      </if>
+      <if test="accessType != null" >
+        access_type = #{accessType,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="musicUrl != null" >
+        music_url = #{musicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="hdMusicUrl != null" >
+        hd_music_url = #{hdMusicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbMediaId != null" >
+        thumb_media_id = #{thumbMediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCount != null" >
+        article_count = #{articleCount,jdbcType=INTEGER},
+      </if>
+      <if test="picUrl != null" >
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStatus != null" >
+        publish_status = #{publishStatus,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null" >
+        created_user_id = #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedUserId != null" >
+        modified_user_id = #{modifiedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articles != null" >
+        articles = #{articles,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.baiguo.web.wechat.model.WechatTemplate" >
+    update wechat_template
+    set match_text = #{matchText,jdbcType=VARCHAR},
+      access_type = #{accessType,jdbcType=VARCHAR},
+      msg_type = #{msgType,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      music_url = #{musicUrl,jdbcType=VARCHAR},
+      hd_music_url = #{hdMusicUrl,jdbcType=VARCHAR},
+      thumb_media_id = #{thumbMediaId,jdbcType=VARCHAR},
+      article_count = #{articleCount,jdbcType=INTEGER},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      publish_status = #{publishStatus,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{createdUserId,jdbcType=INTEGER},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      modified_user_id = #{modifiedUserId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR},
+      articles = #{articles,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

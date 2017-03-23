@@ -2,6 +2,7 @@ package com.baiguo.framework.utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 封装常用的http方法
@@ -240,6 +243,40 @@ public class HttpServletUtils {
 		} else {
 			return request.getRemoteAddr();
 		}
+	}
+	
+	/**
+	 * 获取user-agent
+	 * @param request
+	 * @return
+	 */
+	public static String getUserAgent(HttpServletRequest request) {
+		String userAgent = "";
+		userAgent = request.getHeader("user-agent");
+		return userAgent.substring(userAgent.indexOf("(")+1, userAgent.indexOf(")"));
+	}
+	/**
+	 * 将日志写入阿里云日志服务器
+	 * @param index 阿里云日志服务器索引
+	 * @param topic 阿里云日志服务器标题
+	 * @param keys json键名
+	 * @param values json键值
+	 * @param now 写入时间
+	 */
+	public static void writeLogs(String index, String topic, String[] keys, Object[] values, Date now) {
+		JSONObject json = new JSONObject();
+		for(int i = 0; i < keys.length; i++) {
+			json.put(keys[i], values[i]);
+		}
+		//AliyunLogUtils.writeLogs(index, topic, json.toString(), now);
+	}
+	/**
+	 * 获取访问url
+	 * @param request
+	 * @return
+	 */
+	public static String getServerUrl(HttpServletRequest request) {
+		return request.getRequestURI();
 	}
 	
 	/**

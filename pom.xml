@@ -390,6 +390,27 @@
 			<artifactId>activemq-client</artifactId>
 			<version>${activemq.version}</version>
 		</dependency>
+		
+		<!-- 阿里云日志服务 -->
+		<dependency>
+			<groupId>com.aliyun.openservices</groupId>
+			<artifactId>aliyun-log</artifactId>
+			<version>0.6.3</version>
+		</dependency>
+		
+		<!-- 二维码生成包 -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		
+		<!-- 基于java1.6 的加密算法实现 -->
+		<dependency>
+		    <groupId>org.bouncycastle</groupId>
+		    <artifactId>bcprov-jdk16</artifactId>
+		    <version>1.45</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>baiguo</finalName>

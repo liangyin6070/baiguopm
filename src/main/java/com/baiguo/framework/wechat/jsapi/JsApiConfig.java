@@ -63,7 +63,7 @@ public class JsApiConfig {
 	 * @param url
 	 * @return
 	 */
-	public JsApiConfig getInstance(Boolean debug, String url) {
+	public static JsApiConfig getInstance(Boolean debug, String url) {
 		return new JsApiConfig(debug, url);
 	}
 	

@@ -35,6 +35,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.util.WebUtils;
 
 import com.baiguo.framework.base.BaseRestController;
+import com.baiguo.framework.utils.HttpServletUtils;
 import com.baiguo.framework.utils.WebParamUtils;
 import com.baiguo.web.admin.model.SystemLog;
 import com.baiguo.web.admin.model.SystemResource;
@@ -110,7 +111,7 @@ public class AdminMainController extends BaseRestController {
 		//String sessionCode = (String) WebUtils.getSessionAttribute(request, "verCode");
 		SystemLog log = new SystemLog();
 		log.setOperateTime(now);
-		log.setRemoteAddr(getIpAddr(request));
+		log.setRemoteAddr(HttpServletUtils.getIpAddr(request));
 		log.setOperateType("LOGIN");
 		
 		if(StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
