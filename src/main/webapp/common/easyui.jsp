@@ -6,7 +6,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/easyui/locale/easyui-lang-zh_CN.js"></script>
 <style type="text/css">
-	
 	.panel-header, .panel-body{
 		border:none;
 	}
@@ -17,16 +16,6 @@
 	.panel-header .panel-title{
 		color:#b5b5b5;
 	}
-	
-	
-
-
-
-
-
-
-
-
 	.tabs-header, .tabs-scroller-left, .tabs-scroller-right, .tabs{
 		background: #fff;
 		border:none;
@@ -49,10 +38,6 @@
 	.datagrid-toolbar{
 		background:#fff;
 	}
-	
-
-
-
 	#tb{
 		padding: 15px 18px !important;
 	}

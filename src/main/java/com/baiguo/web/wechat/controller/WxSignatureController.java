@@ -2,7 +2,6 @@ package com.baiguo.web.wechat.controller;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import javax.annotation.Resource;
@@ -30,7 +29,11 @@ import com.baiguo.web.wechat.service.WechatTemplateServiceI;
 import com.baiguo.web.wechat.service.WechatUserServiceI;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-
+/**
+ * 微信验证和消息处理MVC类
+ * @author Administrator
+ *
+ */
 @Controller
 public class WxSignatureController extends WechatSupport {
 
@@ -44,7 +47,7 @@ public class WxSignatureController extends WechatSupport {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value="/wx/signature", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value="/wechat/common/signature", method = { RequestMethod.GET, RequestMethod.POST })
 	public void signature(HttpServletRequest request, HttpServletResponse response) {
 		boolean isGet = request.getMethod().toLowerCase().equals("get");
 		if(isGet) {

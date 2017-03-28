@@ -50,7 +50,7 @@ public class WxApiPayController extends WechatSupport {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value="/wxPay/unifiedOrde", method={RequestMethod.POST})
+	@RequestMapping(value="/wechat/wxPay/unifiedOrde", method={RequestMethod.POST})
 	public void unifiedOrde(HttpServletRequest request, HttpServletResponse response, String openid,
 			String body, String out_trade_no, Integer total_fee) {
 		log.info("调用统一下单接口："+openid);
@@ -95,7 +95,7 @@ public class WxApiPayController extends WechatSupport {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("/wxPay/success")
+	@RequestMapping("/wechat/wxPay/success")
 	public void paySuccess(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ServletInputStream sis = request.getInputStream();
@@ -128,7 +128,7 @@ public class WxApiPayController extends WechatSupport {
 	   * @param code_url
 	   * @param response
 	   */
-	  @RequestMapping("/wxPay/qr_code")
+	  @RequestMapping("/wechat/wxPay/qr_code")
 	  public void getQRCode(HttpServletRequest request, HttpServletResponse response, String code_url){
 		  GenerateQrCodeUtils.encodeQrcode(code_url, response);
 	  }
